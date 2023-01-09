@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { IsString } from 'class-validator';
 import { MaxLength, MinLength } from 'class-validator/types/decorator/decorators';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-import { isNumber } from 'util';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import { Students } from './student.entity';
 
 @Entity()
 export class Notes extends BaseEntity{
@@ -21,6 +21,10 @@ export class Notes extends BaseEntity{
     body : string;
     @Column('integer',{unique: false, nullable: false})
     numPages : number;
+    @ManyToOne(
+        () => Students, (student) => student.myNotes
+    )
+    student?: Students;
 }
 
 export class Note {
